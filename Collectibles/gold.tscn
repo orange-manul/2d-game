@@ -1,0 +1,100 @@
+[gd_scene load_steps=13 format=3 uid="uid://bw3avo266qp0i"]
+
+[ext_resource type="Texture2D" uid="uid://bdi5p3r1ihp4a" path="res://oak_woods_v1.0/coin-Sheet.png" id="1_qrsmy"]
+
+[sub_resource type="GDScript" id="GDScript_ibb67"]
+script/source = "extends Area2D
+
+
+func _on_body_entered(body):
+	if body.name == \"Player\":
+		var tween = get_tree().create_tween()
+		var tween1 = get_tree().create_tween()
+		tween.tween_property(self, \"position\", position - Vector2(0, 25), 0.3)
+		tween1.tween_property(self, \"modulate:a\", 0, 0.3)
+		tween.tween_callback(queue_free)
+		body.gold += 1
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ilv53"]
+radius = 5.0
+height = 14.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj3nr"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hc1vo"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v73v1"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75nod"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gduy5"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rerkl"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mktyf"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7doa"]
+atlas = ExtResource("1_qrsmy")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jovhf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bj3nr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hc1vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v73v1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75nod")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gduy5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rerkl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mktyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7doa")
+}],
+"loop": true,
+"name": &"coin",
+"speed": 10.0
+}]
+
+[node name="gold" type="Area2D"]
+script = SubResource("GDScript_ibb67")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ilv53")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.515625, 0.585938)
+sprite_frames = SubResource("SpriteFrames_jovhf")
+animation = &"coin"
+autoplay = "coin"
+frame_progress = 0.558719
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
